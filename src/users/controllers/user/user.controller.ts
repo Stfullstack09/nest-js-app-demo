@@ -25,8 +25,6 @@ export class UserController {
     createUser(@Body() user: CreateUserDTO) {
         return this.userService.createUser(user)
     }
-
-    
     
 }
 

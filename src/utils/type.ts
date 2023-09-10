@@ -9,3 +9,8 @@ export interface CreateUser {
     name: string;
     address: string;
 }
+
+export interface loginUser {
+    email: string;
+    password: string;
+}

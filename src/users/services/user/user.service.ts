@@ -1,10 +1,17 @@
 import { Injectable , HttpException, HttpStatus} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/DataBase/user';
 import { userDTO } from 'src/users/dto/user.dto';
+import { generatePassword } from 'src/utils/helper/bcrypt.helper';
 import { CreateUser, user } from 'src/utils/type';
+import { Repository } from 'typeorm';
 // import {plainToClass} from 'class-transformer'
 
 @Injectable()
 export class UserService {
+
+    constructor (@InjectRepository(User) private readonly userRepository : Repository<User>) {}
+    
     private users : user[] =  [
         {
             name: 'truongson',
@@ -36,7 +43,17 @@ export class UserService {
         
     }
 
-    createUser(user: CreateUser) {
-        return ;
+    async createUser(user: CreateUser) {
+       try {
+        const passwordHash = await generatePassword(user.password);
+        const newUser = this.userRepository.create({
+            ...user,
+            password: passwordHash
+        })
+        const saveUser = await this.userRepository.save(newUser);
+        return saveUser;
+       } catch (error) {
+            throw new HttpException('Email Đã Tồn Tại!', HttpStatus.BAD_REQUEST)
+       }
     }
 }
