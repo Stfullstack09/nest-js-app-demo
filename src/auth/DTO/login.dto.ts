@@ -1,3 +1,5 @@
+import { User } from '../../DataBase/user';
+import { Request } from 'express';
  import { Exclude } from 'class-transformer';
 import { IsNotEmpty ,MinLength,IsEmail} from 'class-validator';
 export class userDTO {
@@ -16,4 +18,8 @@ export class UserResponse {
     constructor(user : Partial<UserResponse> ) {
         Object.assign(this,user)
     }
+}
+
+export interface RequestCustom extends Request  {
+    user: User
 }
