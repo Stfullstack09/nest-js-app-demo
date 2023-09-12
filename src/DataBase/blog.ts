@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./user";
 
 @Entity()
 export class Blog { 
@@ -22,4 +23,7 @@ export class Blog {
    })
    slug: string;
 
- }
+   @ManyToOne(() => User, user => user.blog)
+   users: User
+
+  }

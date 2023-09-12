@@ -56,4 +56,17 @@ export class UserService {
             throw new HttpException('Email Đã Tồn Tại!', HttpStatus.BAD_REQUEST)
        }
     }
+
+    async finOneUserByEmail(email : string) : Promise<User | null> {
+        const user = await this.userRepository.findOneBy({
+            email
+        })
+
+        if(user) {
+            return user
+        }else{
+            return null
+        }
+        
+    }
 }

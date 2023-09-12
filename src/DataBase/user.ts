@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Blog } from "./blog";
 
 @Entity()
 export class User { 
@@ -19,4 +20,7 @@ export class User {
 
     @Column()
     address: string;
+    
+    @OneToMany(() => Blog, blog => blog.users)
+    blog: Blog[];  
  }

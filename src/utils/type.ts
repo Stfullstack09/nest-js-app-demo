@@ -14,3 +14,8 @@ export interface loginUser {
     email: string;
     password: string;
 }
+
+export interface validateDetail {
+    email: string;
+    password: string;
+}
