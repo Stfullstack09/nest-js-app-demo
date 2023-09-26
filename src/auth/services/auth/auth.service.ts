@@ -34,8 +34,6 @@ export class AuthService {
     async validateUser(email: string, password: string) : Promise<User | null> {
         const userDB = await this.userService.finOneUserByEmail(email);
 
-        console.log(userDB)
-
         if(userDB) {
             const check = await CheckPassword(password, userDB.password)
 
@@ -48,15 +46,18 @@ export class AuthService {
         }else{
             return null;
         }
-        
     }
 
     async loginJWT(user: User) {
         const payload = { email: user.email, address:  user.address, name: user.name}
 
         return {
-            access_token:  this.jwtService.sign(payload)
+            access_token:  this.jwtService.sign(payload , {
+                expiresIn: '60s'
+            }),
+            refresh_token: this.jwtService.sign(payload,  {
+                expiresIn: '24h'
+            })
         }
-        
     }
 }

@@ -18,9 +18,6 @@ import { JWTStrategy } from './util/jwt.strategy';
     UsersModule,
     JwtModule.register({
       secret: "nestjs-secret",
-      signOptions: {
-        expiresIn: '1h'
-      }
     })
   ],
   controllers: [AuthController],
